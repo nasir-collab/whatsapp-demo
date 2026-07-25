@@ -1,0 +1,31 @@
+# Tasks - WhatsCart Demo Flow Fixes
+
+- `[x]` Update `server.js` to support agent takeover, template broadcasts, product card broadcasts, and button click webhooks.
+- `[x]` Update `app.js` API layer with `getCustomers()`.
+- `[x]` Update `app.js` to render the simulator `payment_reminder` template button correctly.
+- `[x]` Refactor `app.js` simulator buttons using event redirection on `#wa-messages-log`.
+- `[x]` Update `app.js` to render the inbox thread list dynamically.
+- `[x]` Update `app.js` to calculate and render the sidebar unread badge.
+- `[x]` Connect order payment success to dashboard and thread list refresh.
+- `[x]` Test and verify the full user flows (Campaign referral -> Package select -> Payment confirmation -> Dashboard updates).
+- `[x]` Create a secure payment landing page (`payment.html`) with dynamic cart loading.
+- `[x]` Redirect customer in new tab to `payment.html` checkout page when clicking "Pay Now".
+- `[x]` Replace browser alert popup with premium inline green toast notifications inside phone simulator screen.
+- `[x]` Implement parent-child tab synchronization using log visualizer polling.
+- `[x]` Create a payment success receipt page (`success.html`) showing customer name, transaction ID, date, payment method, amount, print option, and return link.
+- `[x]` Redirect checkout form submit in `payment.html` to `success.html` passing query string details.
+- `[x]` Skip shipping address check on cart submission webhook in `server.js` to directly reply with the Pay Now notification card in the phone simulator.
+- `[x]` Create a login page (`login.html`) with quick sign-in buttons for Shop Owner and Support Agent.
+- `[x]` Implement `/api/login` auth endpoint on backend.
+- `[x]` Add session validation checks and feature permission gating in `app.js` (hiding Catalog Sync, Campaigns, and Shopify Sync for Support Agent roles).
+- `[x]` Implement robust event delegation on `elements.waCatalogProductsContainer` to process "Add to Cart" inside the Store Catalog modal cleanly.
+- `[x]` Transform inventory database products in `db.json` into premium Ethnic Garments for ladies and gents (sherwani, anarkali gown, silk saree, and classic kurta sets).
+- `[x]` Redesign the simulator catalog item cards to render two buttons side by side: "Add to Cart" (hollow green border) and "Buy Now" (solid green background with bolt icon).
+- `[x]` Wire "Buy Now" button to open `payment.html` in a new tab, passing the `buyNowProduct` query string parameter.
+- `[x]` Handle single-item "Buy Now" payloads in `payment.html` and `server.js` to process and log the specific garment checkout securely without modifying/clearing the main persistent shopping cart.
+- `[x]` Fix catalog item card height and layout overlap issue by setting a fixed height (210px), limiting item name text to exactly 2 lines (using -webkit-line-clamp), and correcting the broken Banarasi Silk Saree image link in `db.json`.
+- `[x]` Add a tabbed payment method switcher on `payment.html` allowing the customer to choose between Cards (Credit/Debit), UPI, and Net Banking.
+- `[x]` Implement dynamic required attribute toggles on payment fields so validation passes correctly on hidden panels.
+- `[x]` Support custom receipt text on `success.html` by formatting the selected payment method details (e.g. UPI ID or Selected Bank Name) and passing it via query parameters.
+- `[x]` Rebrand the campaign landing page (`landing.html`) to display the new Traditional Ethnic Garments theme, updating the titles, copy descriptions, and showcase product item images.
+- `[x]` Copy user's brand logo image to the project directory and implement a CSS wrapper clipping technique (`overflow: hidden` and `scale(1.6)`) to isolate and display only the beautiful yellow checkmark symbol as a sharp, high-fidelity, scale-invariant vector icon across the console sidebar, login card, checkout gateway, and receipt pages, updating the brand name to Plan D Media.

@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WhatsCart Secure Checkout</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary-color: #25D366;
+      --primary-hover: #1fba58;
+      --bg-main: #0B0E11;
+      --bg-card: #17202B;
+      --border-color: rgba(255, 255, 255, 0.08);
+      --text-main: #F1F5F9;
+      --text-muted: #94A3B8;
+      --accent-color: #10B981;
+      --font-family-title: 'Outfit', sans-serif;
+      --font-family-body: 'Inter', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      font-family: var(--font-family-body);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Background glow */
+    .glow-bg {
+      position: absolute;
+      top: -20%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, rgba(37, 211, 102, 0.05) 0%, rgba(0,0,0,0) 75%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .checkout-container {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 24px;
+      width: 100%;
+      max-width: 900px;
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
+      z-index: 10;
+      overflow: hidden;
+    }
+
+    @media (max-width: 768px) {
+      .checkout-container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Left panel: Order summary */
+    .order-summary-panel {
+      padding: 40px;
+      border-right: 1px solid var(--border-color);
+      background-color: rgba(255, 255, 255, 0.01);
+    }
+
+    .panel-title {
+      font-family: var(--font-family-title);
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .panel-title i {
+      color: var(--primary-color);
+    }
+
+    .cart-items-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 32px;
+      max-height: 280px;
+      overflow-y: auto;
+      padding-right: 8px;
+    }
+
+    /* Custom scrollbar */
+    .cart-items-list::-webkit-scrollbar {
+      width: 6px;
+    }
+    .cart-items-list::-webkit-scrollbar-track {
+      background: rgba(255,255,255,0.02);
+    }
+    .cart-items-list::-webkit-scrollbar-thumb {
+      background: rgba(255,255,255,0.1);
+      border-radius: 3px;
+    }
+
+    .cart-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding-bottom: 16px;
+      border-bottom: 1px dashed rgba(255, 255, 255, 0.06);
+    }
+
+    .cart-item img {
+      width: 60px;
+      height: 60px;
+      border-radius: 12px;
+      object-fit: cover;
+      border: 1px solid var(--border-color);
+    }
+
+    .cart-item-info {
+      flex: 1;
+    }
+
+    .cart-item-name {
+      font-weight: 600;
+      font-size: 15px;
+      margin-bottom: 4px;
+      color: var(--text-main);
+    }
+
+    .cart-item-sku {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .cart-item-price {
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--primary-color);
+    }
+
+    .price-calculations {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      border-top: 1px solid var(--border-color);
+      padding-top: 24px;
+    }
+
+    .calc-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .calc-row.total {
+      font-family: var(--font-family-title);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-main);
+      border-top: 1px solid var(--border-color);
+      padding-top: 16px;
+      margin-top: 8px;
+    }
+
+    .calc-row.total span {
+      color: var(--text-main);
+    }
+
+    .calc-row.total .total-price {
+      color: var(--primary-color);
+      font-size: 22px;
+    }
+
+    /* Right panel: Payment form */
+    .payment-form-panel {
+      padding: 40px;
+      background-color: rgba(0, 0, 0, 0.15);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .payment-brand {
+      font-family: var(--font-family-title);
+      font-size: 13px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--text-muted);
+      margin-bottom: 32px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .payment-brand i {
+      color: var(--primary-color);
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .form-group label {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-muted);
+    }
+
+    .form-input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .form-input-wrapper i {
+      position: absolute;
+      left: 14px;
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    .form-control {
+      width: 100%;
+      background-color: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 14px 14px 14px 40px;
+      color: var(--text-main);
+      font-family: var(--font-family-body);
+      font-size: 14px;
+      transition: all 0.3s ease;
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      background-color: rgba(255, 255, 255, 0.05);
+      box-shadow: 0 0 10px rgba(37, 211, 102, 0.1);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .btn-pay {
+      width: 100%;
+      background-color: var(--primary-color);
+      color: #0c2312;
+      border: none;
+      border-radius: 12px;
+      padding: 16px;
+      font-family: var(--font-family-body);
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 8px 24px rgba(37, 211, 102, 0.2);
+      transition: all 0.3s ease;
+      margin-top: 12px;
+    }
+
+    .btn-pay:hover {
+      background-color: var(--primary-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 12px 30px rgba(37, 211, 102, 0.3);
+    }
+
+    .btn-pay:active {
+      transform: translateY(1px);
+    }
+
+    .btn-pay:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .payment-security-note {
+      text-align: center;
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .payment-security-note i {
+      color: var(--primary-color);
+    }
+
+    /* Success screen state */
+    .success-container {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 60px 40px;
+      animation: fadeIn 0.5s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .success-icon-wrapper {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background-color: rgba(37, 211, 102, 0.1);
+      border: 2px solid var(--primary-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+      color: var(--primary-color);
+      font-size: 36px;
+      animation: scaleUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+
+    @keyframes scaleUp {
+      from { transform: scale(0.6); }
+      to { transform: scale(1); }
+    }
+
+    .success-title {
+      font-family: var(--font-family-title);
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: var(--text-main);
+    }
+
+    .success-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 32px;
+      max-width: 380px;
+    }
+
+    .btn-close-window {
+      background-color: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 12px 28px;
+      border-radius: 10px;
+      font-family: var(--font-family-body);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-close-window:hover {
+      background-color: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255,255,255,0.15);
+    }
+
+    /* Payment Methods Tabs and App buttons */
+    .payment-tabs {
+      display: flex;
+      background-color: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 4px;
+      margin-bottom: 28px;
+      gap: 4px;
+    }
+
+    .payment-tab {
+      flex: 1;
+      text-align: center;
+      padding: 12px 10px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.3s ease;
+    }
+
+    .payment-tab:hover {
+      color: var(--text-main);
+      background-color: rgba(255, 255, 255, 0.02);
+    }
+
+    .payment-tab.active {
+      background-color: var(--primary-color);
+      color: #0c2312;
+      box-shadow: 0 4px 12px rgba(37, 211, 102, 0.15);
+    }
+
+    .upi-apps {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .upi-app-btn {
+      background-color: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 12px;
+      color: var(--text-main);
+      font-size: 12px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .upi-app-btn:hover {
+      background-color: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+  </style>
+</head>
+<body>
+  <div class="glow-bg"></div>
+
+  <!-- CHECKOUT CONTAINER -->
+  <div class="checkout-container" id="checkout-main-view">
+    <!-- Order Summary -->
+    <div class="order-summary-panel">
+      <h2 class="panel-title">
+        <i class="fa-solid fa-cart-shopping"></i> Order Summary
+      </h2>
+      
+      <div class="cart-items-list" id="payment-cart-list">
+        <!-- Rendered dynamically -->
+        <div style="color: var(--text-muted); text-align: center; padding: 40px 0;">
+          <i class="fa-solid fa-spinner fa-spin"></i> Loading order cart...
+        </div>
+      </div>
+
+      <div class="price-calculations">
+        <div class="calc-row">
+          <span>Subtotal</span>
+          <span id="subtotal-val">$0.00</span>
+        </div>
+        <div class="calc-row">
+          <span>Estimated Shipping</span>
+          <span style="color: var(--primary-color); font-weight: 600;">FREE</span>
+        </div>
+        <div class="calc-row">
+          <span>Tax</span>
+          <span>$0.00</span>
+        </div>
+        <div class="calc-row total">
+          <span>Total</span>
+          <strong class="total-price" id="total-val">$0.00</strong>
+        </div>
+      </div>
+    </div>
+
+    <!-- Payment Gateway Form -->
+    <div class="payment-form-panel">
+      <div class="payment-brand" style="display: flex; align-items: center; gap: 10px;">
+        <div style="width: 24px; height: 24px; overflow: hidden; display: flex; align-items: flex-start; justify-content: center; flex-shrink: 0; border-radius: 4px;">
+          <img src="images/logo.png" alt="Plan D Media" style="width: 100%; height: auto; transform: scale(1.65); transform-origin: top center; margin-top: 1px;">
+        </div>
+        <span>Plan D Media Secure Pay</span>
+      </div>
+
+      <form id="payment-checkout-form">
+        <!-- Tab Switcher -->
+        <div class="payment-tabs">
+          <div class="payment-tab active" data-method="card">
+            <i class="fa-solid fa-credit-card"></i> Cards
+          </div>
+          <div class="payment-tab" data-method="upi">
+            <i class="fa-solid fa-mobile-screen-button"></i> UPI
+          </div>
+          <div class="payment-tab" data-method="netbanking">
+            <i class="fa-solid fa-building-columns"></i> Net Banking
+          </div>
+        </div>
+
+        <!-- 1. CARD PAYMENT FIELDS -->
+        <div id="fields-card" class="payment-method-fields">
+          <div class="form-group">
+            <label>Cardholder Name</label>
+            <div class="form-input-wrapper">
+              <i class="fa-solid fa-user"></i>
+              <input type="text" class="form-control" placeholder="e.g. Alex Carter" required id="card-name">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Card Number</label>
+            <div class="form-input-wrapper">
+              <i class="fa-solid fa-credit-card"></i>
+              <input type="text" class="form-control" placeholder="4242  4242  4242  4242" required maxlength="19" id="card-number">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Expiry Date</label>
+              <div class="form-input-wrapper">
+                <i class="fa-solid fa-calendar"></i>
+                <input type="text" class="form-control" placeholder="MM/YY" required maxlength="5" id="card-expiry">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>CVC</label>
+              <div class="form-input-wrapper">
+                <i class="fa-solid fa-lock"></i>
+                <input type="password" class="form-control" placeholder="•••" required maxlength="3" id="card-cvc">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. UPI PAYMENT FIELDS -->
+        <div id="fields-upi" class="payment-method-fields" style="display: none;">
+          <div class="form-group">
+            <label>UPI ID (VPA)</label>
+            <div class="form-input-wrapper">
+              <i class="fa-solid fa-at"></i>
+              <input type="text" class="form-control" placeholder="e.g. alex@okaxis" id="upi-id">
+            </div>
+          </div>
+          <div class="upi-apps">
+            <button type="button" class="upi-app-btn" onclick="document.getElementById('upi-id').value = customerData ? customerData.name.toLowerCase().replace(/\s+/g,'') + '@okaxis' : 'customer@okaxis'">
+              <i class="fa-solid fa-circle-play" style="color:#60A5FA;"></i> GPay / PhonePe
+            </button>
+            <button type="button" class="upi-app-btn" onclick="document.getElementById('upi-id').value = customerData ? customerData.name.toLowerCase().replace(/\s+/g,'') + '@paytm' : 'customer@paytm'">
+              <i class="fa-solid fa-wallet" style="color:#34D399;"></i> Paytm Wallet
+            </button>
+          </div>
+        </div>
+
+        <!-- 3. NET BANKING FIELDS -->
+        <div id="fields-netbanking" class="payment-method-fields" style="display: none;">
+          <div class="form-group">
+            <label>Select Bank</label>
+            <div class="form-input-wrapper">
+              <i class="fa-solid fa-building-columns" style="position: absolute; left: 14px; color: var(--text-muted); z-index: 10;"></i>
+              <select class="form-control" id="netbanking-bank" style="padding-left: 40px; appearance: none; -webkit-appearance: none; background-color: #17202B;">
+                <option value="">-- Choose Bank --</option>
+                <option value="sbi">State Bank of India</option>
+                <option value="hdfc">HDFC Bank</option>
+                <option value="icici">ICICI Bank</option>
+                <option value="axis">Axis Bank</option>
+                <option value="kotak">Kotak Mahindra Bank</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-pay" id="btn-submit-payment" style="margin-top: 24px;">
+          <i class="fa-solid fa-shield-halved"></i> Pay Now
+        </button>
+
+        <div class="payment-security-note">
+          <i class="fa-solid fa-lock"></i> SSL Encrypted 256-bit Connection
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- SUCCESS SCREEN STATE -->
+  <div class="checkout-container" id="checkout-success-view" style="display: none; max-width: 480px; justify-content: center; align-items: center;">
+    <div class="success-container">
+      <div class="success-icon-wrapper">
+        <i class="fa-solid fa-check"></i>
+      </div>
+      <h2 class="success-title">Payment Completed</h2>
+      <p class="success-desc">
+        Thank you! Your payment was secure and processed successfully. Your order confirmation has been sent to your WhatsApp thread.
+      </p>
+      <button class="btn-close-window" id="btn-close-window">Return to WhatsApp</button>
+    </div>
+  </div>
+
+  <script>
+    // 1. Parse query parameter for active customer session
+    const params = new URLSearchParams(window.location.search);
+    const customerId = params.get('customerId') || 'alex';
+    const buyNowProductId = params.get('buyNowProduct');
+    
+    let orderTotal = 0;
+    let customerData = null;
+
+    // 2. Fetch active cart data from server
+    async function loadCheckoutData() {
+      try {
+        const res = await fetch(`/api/customers/${customerId}`);
+        if(!res.ok) throw new Error('Customer details not found');
+        
+        customerData = await res.json();
+        const cartListEl = document.getElementById('payment-cart-list');
+        cartListEl.innerHTML = '';
+        
+        if (buyNowProductId) {
+          // Fetch products catalog to resolve product details
+          const prodRes = await fetch('/api/products');
+          if (!prodRes.ok) throw new Error('Failed to load products list');
+          const products = await prodRes.json();
+          const p = products.find(prod => prod.id === buyNowProductId);
+          
+          if (p) {
+            orderTotal = p.price;
+            cartListEl.innerHTML = `
+              <div class="cart-item">
+                <img src="${p.image}" alt="${p.name}">
+                <div class="cart-item-info">
+                  <div class="cart-item-name">${p.name} <span class="buy-now-tag" style="background: rgba(37,211,102,0.1); color: #25D366; font-size: 9px; padding: 2px 6px; border-radius: 4px; font-weight: 700; margin-left: 6px;">Buy Now</span></div>
+                  <div class="cart-item-sku">SKU: ${p.sku}</div>
+                </div>
+                <div class="cart-item-price">$${p.price.toFixed(2)}</div>
+              </div>
+            `;
+          } else {
+            throw new Error('Product details not found');
+          }
+        } else {
+          // Standard cart loading
+          const cart = customerData.cart;
+          if(!cart || cart.length === 0) {
+            // If cart is empty, use a mock campaign bundle
+            cartListEl.innerHTML = `
+              <div class="cart-item">
+                <img src="https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?w=400&auto=format&fit=crop&q=80" alt="Promo package">
+                <div class="cart-item-info">
+                  <div class="cart-item-name">Royal Silk Sherwani (Gents Promo)</div>
+                  <div class="cart-item-sku">SKU: ETH-SHERW-01</div>
+                </div>
+                <div class="cart-item-price">$149.00</div>
+              </div>
+            `;
+            orderTotal = 149.00;
+          } else {
+            orderTotal = 0;
+            cart.forEach(item => {
+              orderTotal += item.price;
+              
+              const div = document.createElement('div');
+              div.className = 'cart-item';
+              div.innerHTML = `
+                <img src="${item.image}" alt="${item.name}">
+                <div class="cart-item-info">
+                  <div class="cart-item-name">${item.name}</div>
+                  <div class="cart-item-sku">SKU: ${item.sku}</div>
+                </div>
+                <div class="cart-item-price">$${item.price.toFixed(2)}</div>
+              `;
+              cartListEl.appendChild(div);
+            });
+          }
+        }
+        
+        // Populate amounts
+        document.getElementById('subtotal-val').textContent = `$${orderTotal.toFixed(2)}`;
+        document.getElementById('total-val').textContent = `$${orderTotal.toFixed(2)}`;
+        document.getElementById('btn-submit-payment').innerHTML = `<i class="fa-solid fa-lock"></i> Pay $${orderTotal.toFixed(2)} Securely`;
+        
+        // Autofill cardholder name
+        if (customerData) {
+          document.getElementById('card-name').value = customerData.name;
+        }
+      } catch (err) {
+        console.error('Error fetching checkout cart', err);
+        document.getElementById('payment-cart-list').innerHTML = `
+          <div style="color: #ff5b5b; text-align: center; padding: 40px 0;">
+            <i class="fa-solid fa-triangle-exclamation"></i> Error loading checkout cart. Please reload.
+          </div>
+        `;
+      }
+    }
+
+    // Load data on start
+    window.addEventListener('DOMContentLoaded', loadCheckoutData);
+
+    // Tab switching for payment methods
+    let selectedMethod = 'card';
+    
+    document.querySelectorAll('.payment-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        // Toggle active class on tabs
+        document.querySelectorAll('.payment-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        
+        selectedMethod = tab.getAttribute('data-method');
+        
+        // Hide all fields, show active
+        document.querySelectorAll('.payment-method-fields').forEach(f => f.style.display = 'none');
+        document.getElementById(`fields-${selectedMethod}`).style.display = 'block';
+        
+        // Dynamically toggle the required fields
+        document.getElementById('card-name').required = (selectedMethod === 'card');
+        document.getElementById('card-number').required = (selectedMethod === 'card');
+        document.getElementById('card-expiry').required = (selectedMethod === 'card');
+        document.getElementById('card-cvc').required = (selectedMethod === 'card');
+        
+        document.getElementById('upi-id').required = (selectedMethod === 'upi');
+        document.getElementById('netbanking-bank').required = (selectedMethod === 'netbanking');
+      });
+    });
+
+    // Form submission processing
+    const form = document.getElementById('payment-checkout-form');
+    const submitBtn = document.getElementById('btn-submit-payment');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Processing Payment...`;
+      
+      try {
+        // Send payment webhook to node server
+        const res = await fetch('/api/webhook/whatsapp', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            from: customerId,
+            type: 'payment',
+            text: '',
+            payload: { 
+              amount: orderTotal,
+              buyNowProduct: buyNowProductId 
+            }
+          })
+        });
+        
+        if(!res.ok) throw new Error('Payment webhook failed');
+        
+        // Wait 1.5s to simulate network processing and redirect
+        setTimeout(() => {
+          const txnId = 'TXN-' + Math.floor(100000 + Math.random() * 900000);
+          
+          let paymentDetailString = '4242';
+          if (selectedMethod === 'card') {
+            paymentDetailString = document.getElementById('card-number').value.replace(/\s+/g, '').slice(-4) || '4242';
+          } else if (selectedMethod === 'upi') {
+            const upiId = document.getElementById('upi-id').value.trim();
+            paymentDetailString = `UPI (${upiId})`;
+          } else if (selectedMethod === 'netbanking') {
+            const bankSelect = document.getElementById('netbanking-bank');
+            const bankName = bankSelect.options[bankSelect.selectedIndex].text;
+            paymentDetailString = `Net Banking (${bankName})`;
+          }
+          
+          window.location.href = `/success.html?customerId=${customerId}&txnId=${txnId}&amount=${orderTotal}&card=${encodeURIComponent(paymentDetailString)}`;
+        }, 1500);
+        
+      } catch (err) {
+        console.error('Checkout error', err);
+        alert('Payment gateway request failed. Please try again.');
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = `<i class="fa-solid fa-shield-halved"></i> Pay $${orderTotal.toFixed(2)} Securely`;
+      }
+    });
+
+    // Close window / Return to WhatsApp button
+    document.getElementById('btn-close-window').addEventListener('click', () => {
+      window.close();
+    });
+
+    // Auto card formatting utility for nice touch
+    const cardInput = document.getElementById('card-number');
+    cardInput.addEventListener('input', (e) => {
+      let val = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+      let formatted = '';
+      for (let i = 0; i < val.length; i++) {
+        if (i > 0 && i % 4 === 0) formatted += '  ';
+        formatted += val[i];
+      }
+      e.target.value = formatted;
+    });
+
+    // Expiry date auto formatting
+    const expiryInput = document.getElementById('card-expiry');
+    expiryInput.addEventListener('input', (e) => {
+      let val = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+      if (val.length >= 2) {
+        e.target.value = val.substring(0, 2) + '/' + val.substring(2, 4);
+      } else {
+        e.target.value = val;
+      }
+    });
+  </script>
+</body>
+</html>

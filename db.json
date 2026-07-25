@@ -1,0 +1,312 @@
+{
+  "stats": {
+    "sales": 4820,
+    "conversion": 4.8,
+    "sessions": 82,
+    "orderCount": 76
+  },
+  "products": [
+    {
+      "id": "prod1",
+      "name": "Royal Silk Sherwani (Gents)",
+      "price": 149,
+      "sku": "ETH-SHERW-01",
+      "image": "https://images.unsplash.com/photo-1597983073493-88cd35cf93b0?w=400&auto=format&fit=crop&q=80",
+      "desc": "Handcrafted Banarasi silk sherwani with intricate gold zari embroidery, perfect for weddings."
+    },
+    {
+      "id": "prod2",
+      "name": "Designer Anarkali Gown (Ladies)",
+      "price": 125,
+      "sku": "ETH-ANARK-02",
+      "image": "https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?w=400&auto=format&fit=crop&q=80",
+      "desc": "Elegant heavy georgette Anarkali dress featuring detailed hand-woven resham threadwork."
+    },
+    {
+      "id": "prod3",
+      "name": "Banarasi Silk Saree (Ladies)",
+      "price": 180,
+      "sku": "ETH-SAREE-03",
+      "image": "https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=400&auto=format&fit=crop&q=80",
+      "desc": "Woven in pure katan silk with luxurious gold brocade borders and a classic designer pallu."
+    },
+    {
+      "id": "prod4",
+      "name": "Classic Linen Kurta Set (Gents)",
+      "price": 65,
+      "sku": "ETH-KURTA-04",
+      "image": "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=400&auto=format&fit=crop&q=80",
+      "desc": "Soft, breathable organic linen kurta paired with comfortable white cotton pajama trousers."
+    }
+  ],
+  "customers": {
+    "alex": {
+      "id": "alex",
+      "name": "Alex Carter",
+      "phone": "+1 (555) 019-2834",
+      "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80",
+      "ltv": 140,
+      "ordersCount": 3,
+      "state": "STATE_CAMPAIGN_FLOW",
+      "address": "124 Maple St, San Francisco, CA",
+      "notes": "Prefers eco-friendly packaging.",
+      "cart": [],
+      "chatHistory": [
+        {
+          "sender": "bot",
+          "text": "👋 Welcome to WhatsCart Shop! Tap the button below to browse our latest skincare catalog.",
+          "time": "09:30 AM",
+          "isTemplate": true,
+          "templateType": "welcome"
+        },
+        {
+          "sender": "customer",
+          "text": "Hi, I want to check out some products!",
+          "time": "09:31 AM"
+        },
+        {
+          "sender": "bot",
+          "text": "Sure! Here is our current bestseller:",
+          "time": "09:31 AM",
+          "isProductCard": true,
+          "productId": "prod1"
+        },
+        {
+          "sender": "agent",
+          "text": "Hello",
+          "time": "9:13 AM"
+        },
+        {
+          "sender": "agent",
+          "text": "Hi",
+          "time": "11:51 AM"
+        },
+        {
+          "sender": "agent",
+          "text": "hi",
+          "time": "12:00 PM"
+        },
+        {
+          "sender": "customer",
+          "text": "Talk to Agent",
+          "time": "4:57 PM"
+        },
+        {
+          "sender": "bot",
+          "text": "🤖 Connecting you to Sarah Jenkins (Shop Owner). They will reply shortly!",
+          "time": "4:57 PM"
+        },
+        {
+          "sender": "bot",
+          "text": "💳 Secure Payment Invoice\nTotal: *$29.00*",
+          "time": "5:13 PM",
+          "isTemplate": true,
+          "templateType": "payment_reminder"
+        },
+        {
+          "sender": "bot",
+          "text": "✅ Payment Successful!\n\nThank you, *Alex Carter*. Your order *#W-1806* has been confirmed.\nWe will notify you here when it ships.",
+          "time": "5:16 PM"
+        },
+        {
+          "sender": "bot",
+          "text": "✅ Payment Successful!\n\nThank you, *Alex Carter*. Your order *#W-8036* has been confirmed.\nWe will notify you here when it ships.",
+          "time": "5:22 PM"
+        },
+        {
+          "sender": "bot",
+          "text": "👋 Welcome to WhatsCart Shop! Tap the button below to browse our latest skincare catalog.",
+          "time": "5:48 PM",
+          "isTemplate": true,
+          "templateType": "welcome"
+        },
+        {
+          "sender": "bot",
+          "text": "👋 Welcome to WhatsCart Shop! Tap the button below to browse our latest skincare catalog.",
+          "time": "5:48 PM",
+          "isTemplate": true,
+          "templateType": "welcome"
+        },
+        {
+          "sender": "bot",
+          "text": "👋 Welcome to WhatsCart Shop! Tap the button below to browse our latest skincare catalog.",
+          "time": "5:56 PM",
+          "isTemplate": true,
+          "templateType": "welcome"
+        },
+        {
+          "sender": "customer",
+          "text": "[Campaign Referral] Summer Skincare Glow Promo",
+          "time": "6:01 PM"
+        },
+        {
+          "sender": "bot",
+          "text": "👋 Thank you for claiming our Summer Skincare Promo! Please choose one of our exclusive packages below to continue:",
+          "time": "6:01 PM",
+          "isTemplate": true,
+          "templateType": "campaign_packages"
+        },
+        {
+          "sender": "bot",
+          "text": "🔥 Summer FLASH SALE! Get 20% off all Hydrating Glow Serums for the next 2 hours only. Tap below to buy!",
+          "time": "6:01 PM",
+          "isTemplate": true,
+          "templateType": "flash_sale"
+        }
+      ]
+    },
+    "sophia": {
+      "id": "sophia",
+      "name": "Sophia Miller",
+      "phone": "+1 (555) 098-7654",
+      "avatar": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&auto=format&fit=crop&q=80",
+      "ltv": 45,
+      "ordersCount": 1,
+      "state": "STATE_WAITING_AGENT",
+      "address": "742 Evergreen Terrace, Seattle, WA",
+      "notes": "Asked about sensitive skin compatibility.",
+      "cart": [],
+      "chatHistory": [
+        {
+          "sender": "customer",
+          "text": "Is the Hydrating Serum suitable for sensitive skin?",
+          "time": "09:10 AM"
+        },
+        {
+          "sender": "agent",
+          "text": "Yes",
+          "time": "9:14 AM"
+        },
+        {
+          "sender": "agent",
+          "text": "hello",
+          "time": "5:01 PM"
+        },
+        {
+          "sender": "bot",
+          "text": "🔥 Summer FLASH SALE! Get 20% off all Hydrating Glow Serums for the next 2 hours only. Tap below to buy!",
+          "time": "5:01 PM",
+          "isTemplate": true,
+          "templateType": "flash_sale"
+        },
+        {
+          "sender": "bot",
+          "text": "👋 Welcome to WhatsCart Shop! Tap the button below to browse our latest skincare catalog.",
+          "time": "5:01 PM",
+          "isTemplate": true,
+          "templateType": "welcome"
+        },
+        {
+          "sender": "bot",
+          "text": "Sure! Here is our current bestseller:",
+          "time": "5:07 PM",
+          "isProductCard": true,
+          "productId": "prod2"
+        },
+        {
+          "sender": "bot",
+          "text": "💳 Secure Payment Invoice\nTotal: *$29.00*",
+          "time": "5:15 PM",
+          "isTemplate": true,
+          "templateType": "payment_reminder"
+        },
+        {
+          "sender": "bot",
+          "text": "👋 Welcome to WhatsCart Shop! Tap the button below to browse our latest skincare catalog.",
+          "time": "5:52 PM",
+          "isTemplate": true,
+          "templateType": "welcome"
+        }
+      ]
+    },
+    "liam": {
+      "id": "liam",
+      "name": "Liam Chen",
+      "phone": "+1 (555) 023-4567",
+      "avatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&auto=format&fit=crop&q=80",
+      "ltv": 162,
+      "ordersCount": 4,
+      "state": "STATE_COMPLETED",
+      "address": "89 Main Street, Austin, TX",
+      "notes": "Express shipping requested.",
+      "cart": [],
+      "chatHistory": [
+        {
+          "sender": "bot",
+          "text": "Your order #W-9840 has been shipped! Tracking ID: WA-9921.",
+          "time": "08:00 AM"
+        },
+        {
+          "sender": "bot",
+          "text": "💳 Secure Payment Invoice\nTotal: *$29.00*",
+          "time": "5:36 PM",
+          "isTemplate": true,
+          "templateType": "payment_reminder"
+        },
+        {
+          "sender": "bot",
+          "text": "Sure! Here is our current bestseller:",
+          "time": "5:36 PM",
+          "isProductCard": true,
+          "productId": "prod2"
+        },
+        {
+          "sender": "bot",
+          "text": "👋 Welcome to WhatsCart Shop! Tap the button below to browse our latest skincare catalog.",
+          "time": "5:46 PM",
+          "isTemplate": true,
+          "templateType": "welcome"
+        },
+        {
+          "sender": "bot",
+          "text": "👋 Welcome to WhatsCart Shop! Tap the button below to browse our latest skincare catalog.",
+          "time": "5:46 PM",
+          "isTemplate": true,
+          "templateType": "welcome"
+        }
+      ]
+    }
+  },
+  "orders": [
+    {
+      "id": "#W-8036",
+      "customer": "Alex Carter",
+      "products": "",
+      "status": "paid",
+      "total": "$0.00",
+      "source": "chatbot"
+    },
+    {
+      "id": "#W-1806",
+      "customer": "Alex Carter",
+      "products": "",
+      "status": "paid",
+      "total": "$0.00",
+      "source": "chatbot"
+    },
+    {
+      "id": "#W-9842",
+      "customer": "Alex Carter",
+      "products": "Premium Silk Mask × 2",
+      "status": "paid",
+      "total": "$32.00",
+      "source": "chatbot"
+    },
+    {
+      "id": "#W-9841",
+      "customer": "Sophia Miller",
+      "products": "Hydrating Glow Serum × 1",
+      "status": "pending",
+      "total": "$45.00",
+      "source": "agent"
+    },
+    {
+      "id": "#W-9840",
+      "customer": "Liam Chen",
+      "products": "Matte Lip Stain × 3",
+      "status": "shipped",
+      "total": "$54.00",
+      "source": "chatbot"
+    }
+  ]
+}

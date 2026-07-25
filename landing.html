@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Summer Skincare Glow Promo - WhatsCart</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary-color: #25D366;
+      --primary-hover: #1fba58;
+      --bg-main: #0B0E11;
+      --bg-card: #17202B;
+      --border-color: rgba(255, 255, 255, 0.08);
+      --text-main: #F1F5F9;
+      --text-muted: #94A3B8;
+      --font-family-title: 'Outfit', sans-serif;
+      --font-family-body: 'Inter', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      font-family: var(--font-family-body);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      overflow-x: hidden;
+    }
+
+    /* Background decorative glow */
+    .glow-bg {
+      position: absolute;
+      top: -20%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(37, 211, 102, 0.1) 0%, rgba(0,0,0,0) 70%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .landing-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 24px;
+      padding: 48px 40px;
+      width: 100%;
+      max-width: 580px;
+      text-align: center;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 40px rgba(37, 211, 102, 0.05);
+      z-index: 10;
+      backdrop-filter: blur(10px);
+      position: relative;
+    }
+
+    .promo-tag {
+      display: inline-block;
+      background-color: rgba(37, 211, 102, 0.1);
+      color: var(--primary-color);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 20px;
+      letter-spacing: 1px;
+      margin-bottom: 24px;
+      border: 1px solid rgba(37, 211, 102, 0.2);
+    }
+
+    h1 {
+      font-family: var(--font-family-title);
+      font-size: 38px;
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, #FFF 30%, var(--primary-color) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -1px;
+    }
+
+    .subtitle {
+      font-size: 15px;
+      color: var(--text-muted);
+      margin-bottom: 32px;
+      line-height: 1.5;
+    }
+
+    /* Product Grid Image Display */
+    .product-showcase {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .showcase-item {
+      width: 120px;
+      height: 120px;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+      position: relative;
+    }
+
+    .showcase-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .showcase-item:hover img {
+      transform: scale(1.1);
+    }
+
+    /* Countdown Timer styling */
+    .timer-container {
+      background-color: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 12px;
+      margin-bottom: 32px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .timer-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .timer-value {
+      font-family: monospace;
+      font-size: 16px;
+      font-weight: 700;
+      color: #ff5b5b;
+      letter-spacing: 1px;
+    }
+
+    /* WhatsApp Call To Action Button */
+    .btn-cta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      width: 100%;
+      background-color: var(--primary-color);
+      color: #0c2312;
+      font-family: var(--font-family-body);
+      font-size: 16px;
+      font-weight: 700;
+      text-decoration: none;
+      padding: 16px 32px;
+      border-radius: 14px;
+      box-shadow: 0 8px 24px rgba(37, 211, 102, 0.3);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .btn-cta:hover {
+      background-color: var(--primary-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(37, 211, 102, 0.4);
+    }
+
+    .btn-cta i {
+      font-size: 24px;
+    }
+
+    .guarantee-note {
+      font-size: 12px;
+      color: var(--text-dark);
+      margin-top: 16px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .guarantee-note i {
+      color: var(--primary-color);
+    }
+  </style>
+</head>
+<body>
+  <div class="glow-bg"></div>
+
+  <div class="landing-card">
+    <span class="promo-tag">💥 Handcrafted Festive Special</span>
+    <h1>Handcrafted Royal Ethnic Wear</h1>
+    <p class="subtitle">Discover our premium Banarasi silk sarees, designer anarkalis, and royal sherwanis. Claim your exclusive 20% discount package instantly on WhatsApp and complete your order in seconds.</p>
+    
+    <!-- Product Showcase -->
+    <div class="product-showcase">
+      <div class="showcase-item" title="Royal Silk Sherwani">
+        <img src="https://images.unsplash.com/photo-1597983073493-88cd35cf93b0?w=200&auto=format&fit=crop&q=80" alt="Royal Silk Sherwani">
+      </div>
+      <div class="showcase-item" title="Designer Anarkali Gown">
+        <img src="https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?w=200&auto=format&fit=crop&q=80" alt="Designer Anarkali Gown">
+      </div>
+      <div class="showcase-item" title="Banarasi Silk Saree">
+        <img src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=200&auto=format&fit=crop&q=80" alt="Banarasi Silk Saree">
+      </div>
+    </div>
+
+    <!-- Countdown Timer -->
+    <div class="timer-container">
+      <span class="timer-label"><i class="fa-regular fa-clock"></i> Offer Expires In:</span>
+      <span class="timer-value" id="countdown-timer">02:44:18</span>
+    </div>
+
+    <!-- Call to Action -->
+    <a href="/index.html?source=paid_campaign" class="btn-cta">
+      <i class="fa-brands fa-whatsapp"></i> Claim Offer on WhatsApp
+    </a>
+
+    <div class="guarantee-note">
+      <i class="fa-solid fa-shield-halved"></i> Secured WhatsApp Business Checkout
+    </div>
+  </div>
+
+  <script>
+    // Live countdown simulator
+    let hours = 2, minutes = 44, seconds = 18;
+    const timerEl = document.getElementById('countdown-timer');
+
+    setInterval(() => {
+      seconds--;
+      if (seconds < 0) {
+        seconds = 59;
+        minutes--;
+        if (minutes < 0) {
+          minutes = 59;
+          hours--;
+          if (hours < 0) {
+            // Reset to keep demo active
+            hours = 2; minutes = 44; seconds = 18;
+          }
+        }
+      }
+      
+      const pad = (val) => String(val).padStart(2, '0');
+      timerEl.textContent = `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
+    }, 1000);
+  </script>
+</body>
+</html>

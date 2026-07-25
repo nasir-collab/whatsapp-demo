@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment Successful - Plan D Media Pay</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary-color: #25D366;
+      --primary-hover: #1fba58;
+      --bg-main: #0B0E11;
+      --bg-card: #17202B;
+      --border-color: rgba(255, 255, 255, 0.08);
+      --text-main: #F1F5F9;
+      --text-muted: #94A3B8;
+      --accent-color: #10B981;
+      --font-family-title: 'Outfit', sans-serif;
+      --font-family-body: 'Inter', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      font-family: var(--font-family-body);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Background glow */
+    .glow-bg {
+      position: absolute;
+      top: -20%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, rgba(37, 211, 102, 0.05) 0%, rgba(0,0,0,0) 75%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .success-container {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 24px;
+      width: 100%;
+      max-width: 520px;
+      padding: 48px 40px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      position: relative;
+    }
+
+    /* Print styling */
+    @media print {
+      body {
+        background: white;
+        color: black;
+      }
+      .glow-bg, .btn-group, .payment-security-note {
+        display: none !important;
+      }
+      .success-container {
+        border: none;
+        box-shadow: none;
+        background: white;
+        color: black;
+        padding: 0;
+        max-width: 100%;
+      }
+      .success-icon-wrapper {
+        display: none !important;
+      }
+      .receipt-card {
+        border: 1px solid #ccc !important;
+        background: transparent !important;
+        color: black !important;
+      }
+      .receipt-row span {
+        color: #555 !important;
+      }
+      .receipt-row strong {
+        color: black !important;
+      }
+    }
+
+    .success-icon-wrapper {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background-color: rgba(37, 211, 102, 0.1);
+      border: 2px solid var(--primary-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+      color: var(--primary-color);
+      font-size: 36px;
+      animation: scaleUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+
+    @keyframes scaleUp {
+      from { transform: scale(0.6); }
+      to { transform: scale(1); }
+    }
+
+    .success-title {
+      font-family: var(--font-family-title);
+      font-size: 30px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: var(--text-main);
+    }
+
+    .success-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 32px;
+      max-width: 400px;
+    }
+
+    /* Receipt Details Card */
+    .receipt-card {
+      width: 100%;
+      background-color: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 32px;
+      text-align: left;
+    }
+
+    .receipt-header {
+      font-family: var(--font-family-title);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .receipt-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      font-size: 14px;
+    }
+
+    .receipt-row:last-child {
+      margin-bottom: 0;
+      padding-top: 12px;
+      border-top: 1px dashed var(--border-color);
+    }
+
+    .receipt-row span {
+      color: var(--text-muted);
+    }
+
+    .receipt-row strong {
+      color: var(--text-main);
+      font-weight: 600;
+    }
+
+    .receipt-row.amount-paid strong {
+      color: var(--primary-color);
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    /* Buttons */
+    .btn-group {
+      display: flex;
+      gap: 16px;
+      width: 100%;
+      margin-bottom: 24px;
+    }
+
+    .btn {
+      flex: 1;
+      padding: 14px 20px;
+      border-radius: 12px;
+      font-family: var(--font-family-body);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary {
+      background-color: var(--primary-color);
+      color: #0c2312;
+      border: none;
+      box-shadow: 0 8px 24px rgba(37, 211, 102, 0.2);
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-hover);
+      box-shadow: 0 12px 30px rgba(37, 211, 102, 0.3);
+    }
+
+    .btn-secondary {
+      background-color: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+    }
+
+    .btn-secondary:hover {
+      background-color: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .payment-security-note {
+      font-size: 11px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .payment-security-note i {
+      color: var(--primary-color);
+    }
+  </style>
+</head>
+<body>
+  <div class="glow-bg"></div>
+
+  <div class="success-container">
+    <div class="success-icon-wrapper">
+      <i class="fa-solid fa-check"></i>
+    </div>
+    
+    <h1 class="success-title">Payment Receipt</h1>
+    <p class="success-desc">
+      Your payment was secure and processed successfully. A confirmation message has been sent to your WhatsApp thread.
+    </p>
+
+    <!-- Receipt Details Card -->
+    <div class="receipt-card">
+      <div class="receipt-header">
+        <span>Transaction Info</span>
+        <div style="display: flex; align-items: center; gap: 6px;">
+          <div style="width: 16px; height: 16px; overflow: hidden; display: flex; align-items: flex-start; justify-content: center; flex-shrink: 0; border-radius: 2px;">
+            <img src="images/logo.png" alt="Plan D Media" style="width: 100%; height: auto; transform: scale(1.65); transform-origin: top center; margin-top: 1px;">
+          </div>
+          <span>Plan D Media Pay</span>
+        </div>
+      </div>
+      
+      <div class="receipt-row">
+        <span>Customer Name</span>
+        <strong id="receipt-name">Loading...</strong>
+      </div>
+      <div class="receipt-row">
+        <span>Transaction ID</span>
+        <strong id="receipt-txn-id">Loading...</strong>
+      </div>
+      <div class="receipt-row">
+        <span>Date & Time</span>
+        <strong id="receipt-date">Loading...</strong>
+      </div>
+      <div class="receipt-row">
+        <span>Payment Method</span>
+        <strong id="receipt-card">Loading...</strong>
+      </div>
+      <div class="receipt-row amount-paid">
+        <span>Total Paid</span>
+        <strong id="receipt-amount">$0.00</strong>
+      </div>
+    </div>
+
+    <!-- Buttons -->
+    <div class="btn-group">
+      <button class="btn btn-secondary" onclick="window.print()">
+        <i class="fa-solid fa-print"></i> Print Receipt
+      </button>
+      <button class="btn btn-primary" id="btn-close">
+        <i class="fa-brands fa-whatsapp"></i> Return to Chat
+      </button>
+    </div>
+
+    <div class="payment-security-note">
+      <i class="fa-solid fa-circle-check"></i> Verified by Plan D Media Security Gateway
+    </div>
+  </div>
+
+  <script>
+    // Extract query parameters
+    const params = new URLSearchParams(window.location.search);
+    const customerId = params.get('customerId') || 'alex';
+    const txnId = params.get('txnId') || 'TXN-' + Math.floor(100000 + Math.random() * 900000);
+    const amount = parseFloat(params.get('amount') || '0');
+    const cardDigits = params.get('card') || '4242';
+
+    // Populate transaction details
+    document.getElementById('receipt-txn-id').textContent = txnId;
+    document.getElementById('receipt-amount').textContent = `$${amount.toFixed(2)}`;
+    
+    if (cardDigits.startsWith('UPI') || cardDigits.startsWith('Net Banking')) {
+      document.getElementById('receipt-card').textContent = cardDigits;
+    } else {
+      document.getElementById('receipt-card').textContent = `Credit Card (•••• •••• •••• ${cardDigits})`;
+    }
+
+    // Get current formatted local date and time
+    const now = new Date();
+    const formattedDate = now.toLocaleDateString('en-US', { 
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric' 
+    }) + ' at ' + now.toLocaleTimeString('en-US', { 
+      hour: '2-digit', 
+      minute: '2-digit' 
+    });
+    document.getElementById('receipt-date').textContent = formattedDate;
+
+    // Fetch customer details to resolve name
+    async function loadCustomerName() {
+      try {
+        const res = await fetch(`/api/customers/${customerId}`);
+        if(res.ok) {
+          const customer = await res.json();
+          document.getElementById('receipt-name').textContent = customer.name;
+        } else {
+          document.getElementById('receipt-name').textContent = 'Valued Customer';
+        }
+      } catch (err) {
+        document.getElementById('receipt-name').textContent = 'Valued Customer';
+      }
+    }
+
+    loadCustomerName();
+
+    // Close button returns to chat (closes browser window/tab)
+    document.getElementById('btn-close').addEventListener('click', () => {
+      window.close();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WhatsCart - WhatsApp B2C eCommerce Platform</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Style Sheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-container">
+    
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="brand">
+        <div style="width: 38px; height: 38px; overflow: hidden; display: flex; align-items: flex-start; justify-content: center; flex-shrink: 0; margin-right: 12px; border-radius: 6px; background-color: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05);">
+          <img src="images/logo.png" alt="Plan D Media" style="width: 100%; height: auto; transform: scale(1.6); transform-origin: top center; margin-top: 2px;">
+        </div>
+        <div class="brand-info">
+          <h2>Plan D Media</h2>
+          <span>B2C Console</span>
+        </div>
+      </div>
+      
+      <nav class="nav-menu">
+        <a href="#" class="nav-item active" data-tab="dashboard">
+          <i class="fa-solid fa-chart-pie"></i>
+          <span>Dashboard</span>
+        </a>
+        <a href="#" class="nav-item" data-tab="inbox">
+          <i class="fa-solid fa-comments"></i>
+          <span>Unified Inbox</span>
+          <span class="badge badge-unread" id="inbox-unread-count">2</span>
+        </a>
+        <a href="#" class="nav-item" data-tab="catalog">
+          <i class="fa-solid fa-box-archive"></i>
+          <span>Catalog Sync</span>
+        </a>
+        <a href="#" class="nav-item" data-tab="campaigns">
+          <i class="fa-solid fa-paper-plane"></i>
+          <span>Campaigns</span>
+        </a>
+        <a href="#" class="nav-item" data-tab="settings">
+          <i class="fa-solid fa-sliders"></i>
+          <span>Settings</span>
+        </a>
+      </nav>
+      
+      <div class="user-profile">
+        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" alt="Merchant profile" class="avatar">
+        <div class="user-info">
+          <span class="user-name">Sarah Jenkins</span>
+          <span class="user-role">Shop Owner</span>
+        </div>
+        <i class="fa-solid fa-right-from-bracket logout-btn"></i>
+      </div>
+    </aside>
+    
+    <!-- Main Content Area -->
+    <main class="main-content">
+      
+      <!-- TOP NAVIGATION BAR -->
+      <header class="top-nav">
+        <div class="page-title">
+          <h1 id="current-tab-title">Dashboard Overview</h1>
+          <p id="current-tab-desc">Real-time conversational sales performance metrics.</p>
+        </div>
+        <div class="top-actions">
+          <a href="/landing.html" target="_blank" class="btn btn-secondary" style="text-decoration: none;">
+            <i class="fa-solid fa-rectangle-ad"></i> View Promo Landing Page
+          </a>
+          <div class="sync-status">
+            <span class="status-indicator online"></span>
+            <span style="font-weight: 600;">WABA Connected: +91 9007378887</span>
+          </div>
+          <button class="btn btn-primary" id="btn-quick-broadcast">
+            <i class="fa-solid fa-plus"></i> New Campaign
+          </button>
+        </div>
+      </header>
+      
+      <!-- DYNAMIC CONTENT CONTAINERS -->
+      <div class="content-body">
+        
+        <!-- 1. DASHBOARD VIEW -->
+        <section id="tab-dashboard" class="tab-panel active">
+          <!-- Stat Cards Grid -->
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-header">
+                <span class="stat-title">Total Sales (WhatsApp)</span>
+                <span class="stat-icon-wrapper sales"><i class="fa-solid fa-wallet"></i></span>
+              </div>
+              <div class="stat-value" id="dashboard-sales">$4,820.00</div>
+              <div class="stat-footer">
+                <span class="trend positive"><i class="fa-solid fa-arrow-trend-up"></i> +12.4%</span>
+                <span class="duration">vs. last week</span>
+              </div>
+            </div>
+            
+            <div class="stat-card">
+              <div class="stat-header">
+                <span class="stat-title">Conversion Rate</span>
+                <span class="stat-icon-wrapper conversion"><i class="fa-solid fa-bullseye"></i></span>
+              </div>
+              <div class="stat-value" id="dashboard-conversion">4.8%</div>
+              <div class="stat-footer">
+                <span class="trend positive"><i class="fa-solid fa-arrow-trend-up"></i> +0.6%</span>
+                <span class="duration">conversational checkout</span>
+              </div>
+            </div>
+            
+            <div class="stat-card">
+              <div class="stat-header">
+                <span class="stat-title">Active Sessions</span>
+                <span class="stat-icon-wrapper sessions"><i class="fa-solid fa-users"></i></span>
+              </div>
+              <div class="stat-value" id="dashboard-sessions">84</div>
+              <div class="stat-footer">
+                <span class="trend neutral"><i class="fa-solid fa-minus"></i> Stable</span>
+                <span class="duration">currently in chatbot flow</span>
+              </div>
+            </div>
+            
+            <div class="stat-card">
+              <div class="stat-header">
+                <span class="stat-title">Avg Response Time</span>
+                <span class="stat-icon-wrapper response"><i class="fa-solid fa-bolt"></i></span>
+              </div>
+              <div class="stat-value">28s</div>
+              <div class="stat-footer">
+                <span class="trend positive"><i class="fa-solid fa-arrow-trend-down"></i> -14%</span>
+                <span class="duration">bot & agent routing</span>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Charts Section -->
+          <div class="dashboard-charts">
+            <div class="chart-card">
+              <h3>Sales Trend</h3>
+              <div class="chart-container">
+                <!-- SVG Chart Mock -->
+                <svg viewBox="0 0 500 200" class="svg-chart">
+                  <defs>
+                    <linearGradient id="salesGrad" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="var(--primary-color)" stop-opacity="0.3"/>
+                      <stop offset="100%" stop-color="var(--primary-color)" stop-opacity="0"/>
+                    </linearGradient>
+                  </defs>
+                  <path d="M 0 150 Q 80 120 160 140 T 320 80 T 480 30" fill="none" stroke="var(--primary-color)" stroke-width="4"></path>
+                  <path d="M 0 150 Q 80 120 160 140 T 320 80 T 480 30 L 480 200 L 0 200 Z" fill="url(#salesGrad)"></path>
+                  <!-- Data points -->
+                  <circle cx="160" cy="140" r="6" fill="var(--primary-color)"></circle>
+                  <circle cx="320" cy="80" r="6" fill="var(--primary-color)"></circle>
+                  <circle cx="480" cy="30" r="6" fill="var(--primary-color)"></circle>
+                </svg>
+                <div class="chart-labels">
+                  <span>Mon</span>
+                  <span>Tue</span>
+                  <span>Wed</span>
+                  <span>Thu</span>
+                  <span>Fri</span>
+                  <span>Sat</span>
+                  <span>Sun</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="chart-card">
+              <h3>Active Funnel (User Stages)</h3>
+              <div class="funnel-container">
+                <div class="funnel-stage">
+                  <span class="stage-name">Catalog Viewed</span>
+                  <div class="stage-bar" style="width: 100%;">
+                    <span class="stage-value">412 users</span>
+                  </div>
+                </div>
+                <div class="funnel-stage">
+                  <span class="stage-name">Added to Cart</span>
+                  <div class="stage-bar" style="width: 62%;">
+                    <span class="stage-value">256 users</span>
+                  </div>
+                </div>
+                <div class="funnel-stage">
+                  <span class="stage-name">Checkout Started</span>
+                  <div class="stage-bar" style="width: 38%;">
+                    <span class="stage-value">158 users</span>
+                  </div>
+                </div>
+                <div class="funnel-stage">
+                  <span class="stage-name">Orders Completed</span>
+                  <div class="stage-bar" style="width: 18%;">
+                    <span class="stage-value">74 users</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Recent Transactions -->
+          <div class="recent-orders-card">
+            <div class="card-header">
+              <h3>Recent Conversational Orders</h3>
+              <a href="#" class="view-all-link">View All</a>
+            </div>
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Order ID</th>
+                  <th>Customer</th>
+                  <th>Products</th>
+                  <th>Status</th>
+                  <th>Total</th>
+                  <th>Source</th>
+                </tr>
+              </thead>
+              <tbody id="recent-orders-tbody">
+                <tr>
+                  <td>#W-9842</td>
+                  <td>Alex Carter</td>
+                  <td>Premium Silk Mask × 2</td>
+                  <td><span class="status-badge paid">Paid</span></td>
+                  <td>$32.00</td>
+                  <td><i class="fa-solid fa-robot bot-icon"></i> Chatbot</td>
+                </tr>
+                <tr>
+                  <td>#W-9841</td>
+                  <td>Sophia Miller</td>
+                  <td>Hydrating Glow Serum × 1</td>
+                  <td><span class="status-badge pending">Pending</span></td>
+                  <td>$45.00</td>
+                  <td><i class="fa-solid fa-user-tie agent-icon"></i> Agent</td>
+                </tr>
+                <tr>
+                  <td>#W-9840</td>
+                  <td>Liam Chen</td>
+                  <td>Matte Lip Stain × 3</td>
+                  <td><span class="status-badge shipped">Shipped</span></td>
+                  <td>$54.00</td>
+                  <td><i class="fa-solid fa-robot bot-icon"></i> Chatbot</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          
+          <!-- Live API / Webhook traffic console logs -->
+          <div class="terminal-logs-card" style="margin-top: 32px;">
+            <div class="terminal-header">
+              <div class="terminal-header-title" style="display: flex; align-items: center; gap: 8px;">
+                <span class="status-indicator online"></span>
+                <h3 style="font-family: var(--font-family-title); font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Live Meta API & Webhook logs (+91 9007378887)</h3>
+              </div>
+              <button class="btn btn-small btn-secondary" id="btn-clear-logs">Clear Console</button>
+            </div>
+            <div class="terminal-body" id="terminal-logs-body">
+              <!-- Logs populated via js polling -->
+            </div>
+          </div>
+        </section>
+        
+        <!-- 2. INBOX VIEW (SHARED INBOX + SIMULATOR) -->
+        <section id="tab-inbox" class="tab-panel">
+          <div class="inbox-layout">
+            
+            <!-- Thread List -->
+            <div class="thread-list">
+              <div class="thread-search">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" placeholder="Search chats...">
+              </div>
+              <div class="threads-container">
+                <div class="thread-item active" data-customer-id="alex">
+                  <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80" alt="Customer" class="avatar">
+                  <div class="thread-details">
+                    <div class="thread-meta">
+                      <h4 class="customer-name">Alex Carter</h4>
+                      <span class="message-time">Just now</span>
+                    </div>
+                    <div class="thread-preview">
+                      <p id="thread-preview-alex">Adding silk masks to cart...</p>
+                      <span class="unread-badge">1</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="thread-item" data-customer-id="sophia">
+                  <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&auto=format&fit=crop&q=80" alt="Customer" class="avatar">
+                  <div class="thread-details">
+                    <div class="thread-meta">
+                      <h4 class="customer-name">Sophia Miller</h4>
+                      <span class="message-time">10m ago</span>
+                    </div>
+                    <div class="thread-preview">
+                      <p>Is the Hydrating Serum suitable for sensitive skin?</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="thread-item" data-customer-id="liam">
+                  <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&auto=format&fit=crop&q=80" alt="Customer" class="avatar">
+                  <div class="thread-details">
+                    <div class="thread-meta">
+                      <h4 class="customer-name">Liam Chen</h4>
+                      <span class="message-time">1h ago</span>
+                    </div>
+                    <div class="thread-preview">
+                      <p>Order #W-9840 has been shipped. Tracking: WA-9921</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Chat Pane (Merchant Side) -->
+            <div class="chat-pane">
+              <div class="chat-header">
+                <div class="chat-customer-info">
+                  <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80" alt="Customer" class="avatar" id="chat-header-avatar">
+                  <div>
+                    <h3 id="chat-header-name">Alex Carter</h3>
+                    <span class="active-status"><span class="status-indicator online"></span> Active In Shopbot Flow</span>
+                  </div>
+                </div>
+                
+                <div class="chat-actions" style="display: flex; gap: 8px;">
+                  <button class="btn btn-secondary-icon" title="Toggle CRM Profile" id="btn-toggle-crm">
+                    <i class="fa-solid fa-circle-info"></i>
+                    <span>Profile</span>
+                  </button>
+                  <button class="btn btn-secondary-icon" title="Takeover from Bot" id="btn-takeover">
+                    <i class="fa-solid fa-handshake"></i>
+                    <span>Take Over Chat</span>
+                  </button>
+                </div>
+              </div>
+              
+              <!-- Chat Messages Container -->
+              <div class="chat-messages" id="merchant-messages-container">
+                <!-- Messages will be populated by app.js -->
+              </div>
+              
+              <!-- Chat Input / Quick Actions Panel -->
+              <div class="chat-input-panel">
+                <div class="quick-utilities">
+                  <div class="util-dropdown">
+                    <button class="btn btn-small btn-secondary" id="btn-templates-dropdown">
+                      <i class="fa-solid fa-wand-magic-sparkles"></i> Templates
+                    </button>
+                    <div class="dropdown-menu" id="templates-menu">
+                      <a href="#" data-template="welcome">👋 Send Welcome Flow</a>
+                      <a href="#" data-template="flash_sale">🔥 Send Flash Sale (20%)</a>
+                      <a href="#" data-template="payment_reminder">💳 Send Payment Reminder</a>
+                    </div>
+                  </div>
+                  
+                  <div class="util-dropdown">
+                    <button class="btn btn-small btn-secondary" id="btn-push-catalog">
+                      <i class="fa-solid fa-box-open"></i> Send Product
+                    </button>
+                    <div class="dropdown-menu" id="push-products-menu">
+                      <!-- Populated dynamically from catalog -->
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="message-input-wrapper">
+                  <textarea id="merchant-reply-input" placeholder="Type a message... (Enter to send, Shift+Enter for new line)"></textarea>
+                  <button class="btn btn-primary btn-icon" id="btn-send-merchant-reply">
+                    <i class="fa-solid fa-paper-plane"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Customer CRM Drawer (Collapsed by default for mobile/small screen visibility) -->
+            <div class="crm-drawer collapsed">
+              <div class="crm-header">
+                <h3>Customer Profile</h3>
+              </div>
+              <div class="crm-profile-summary">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&auto=format&fit=crop&q=80" alt="Customer" class="avatar large" id="crm-avatar">
+                <h4 id="crm-name">Alex Carter</h4>
+                <p id="crm-phone">+1 (555) 019-2834</p>
+                <div class="crm-badges">
+                  <span class="badge badge-ltv">LTV: $140.00</span>
+                  <span class="badge badge-orders">3 Orders</span>
+                </div>
+              </div>
+              
+              <div class="crm-details-section">
+                <div class="detail-item">
+                  <span class="detail-label">Active State</span>
+                  <span class="detail-value text-accent" id="crm-active-state">STATE_SHOPPING</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">Shipping Address</span>
+                  <span class="detail-value" id="crm-address">124 Maple St, San Francisco, CA</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">Internal Notes</span>
+                  <textarea class="crm-notes" placeholder="Add private notes about this customer...">Prefers eco-friendly packaging.</textarea>
+                </div>
+              </div>
+            </div>
+            
+            <!-- --------------------------------------------------------------------- -->
+            <!-- CUSTOMER PHONE SIMULATOR (DOCKABLE ON THE RIGHT IN CHAT VIEW) -->
+            <!-- --------------------------------------------------------------------- -->
+            <div class="simulator-wrapper">
+              <div class="simulator-label">
+                <i class="fa-solid fa-mobile-screen-button"></i> Customer WhatsApp Simulator
+              </div>
+              <div class="iphone-mockup">
+                <div class="iphone-screen">
+                  
+                  <!-- iOS Top Bar -->
+                  <div class="iphone-header">
+                    <span class="time">9:41</span>
+                    <div class="camera-island"></div>
+                    <div class="icons">
+                      <i class="fa-solid fa-signal"></i>
+                      <i class="fa-solid fa-wifi"></i>
+                      <i class="fa-solid fa-battery-three-quarters"></i>
+                    </div>
+                  </div>
+                  
+                  <!-- WhatsApp Chat App Header -->
+                  <div class="wa-header">
+                    <div class="wa-back-btn">
+                      <i class="fa-solid fa-chevron-left"></i>
+                      <span class="wa-unread-badge">3</span>
+                    </div>
+                    <div class="wa-profile">
+                      <div class="wa-avatar-wrapper">
+                        <i class="fa-brands fa-whatsapp wa-logo-avatar"></i>
+                      </div>
+                      <div class="wa-store-details">
+                        <span class="wa-store-name">WhatsCart Shop <i class="fa-solid fa-circle-check wa-verified"></i></span>
+                        <span class="wa-store-status">online</span>
+                      </div>
+                    </div>
+                    <div class="wa-header-icons">
+                      <i class="fa-solid fa-video"></i>
+                      <i class="fa-solid fa-phone"></i>
+                    </div>
+                  </div>
+                  
+                  <!-- WhatsApp Chat Message Log -->
+                  <div class="wa-chat-body" id="wa-messages-log">
+                    <!-- WhatsApp dialogue will render dynamically here -->
+                  </div>
+                  
+                  <!-- WhatsApp Footer Input -->
+                  <div class="wa-footer">
+                    <i class="fa-solid fa-plus wa-plus-icon"></i>
+                    <div class="wa-input-container">
+                      <input type="text" id="wa-user-input" placeholder="Type a message...">
+                      <i class="fa-regular fa-face-smile wa-emoji-icon"></i>
+                    </div>
+                    <button class="wa-voice-btn" id="btn-send-wa-message">
+                      <i class="fa-solid fa-paper-plane" id="wa-send-icon"></i>
+                    </button>
+                  </div>
+                  
+                  <!-- Interactive Quick Catalog Modal (Simulated WhatsApp In-App Catalog overlay) -->
+                  <div class="wa-catalog-modal" id="wa-catalog-modal">
+                    <div class="wa-catalog-header">
+                      <button id="btn-close-wa-catalog"><i class="fa-solid fa-xmark"></i></button>
+                      <h3>WhatsCart Store Catalog</h3>
+                      <button id="btn-wa-view-cart" class="cart-btn-indicator">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        <span class="badge" id="wa-cart-badge">0</span>
+                      </button>
+                    </div>
+                    <div class="wa-catalog-products" id="wa-catalog-products-container">
+                      <!-- Render products inside WhatsApp overlay -->
+                    </div>
+                  </div>
+                  
+                  <!-- Interactive Shopping Cart Modal -->
+                  <div class="wa-cart-modal" id="wa-cart-modal">
+                    <div class="wa-cart-header">
+                      <button id="btn-close-wa-cart"><i class="fa-solid fa-chevron-left"></i></button>
+                      <h3>Your Cart</h3>
+                    </div>
+                    <div class="wa-cart-items" id="wa-cart-items-container">
+                      <!-- Cart list -->
+                    </div>
+                    <div class="wa-cart-footer">
+                      <div class="wa-cart-total">
+                        <span>Total</span>
+                        <strong id="wa-cart-total-val">$0.00</strong>
+                      </div>
+                      <button class="btn btn-wa-checkout" id="btn-wa-confirm-order">Send Order to Bot</button>
+                    </div>
+                  </div>
+                  
+                  <!-- Interactive Payment Gateway Modal (Mock Stripe payment checkout inside simulator) -->
+                  <div class="wa-payment-modal" id="wa-payment-modal">
+                    <div class="payment-modal-content">
+                      <div class="payment-brand">
+                        <i class="fa-solid fa-credit-card"></i> WhatsCart Pay
+                      </div>
+                      <h4>Secured Instant Checkout</h4>
+                      <div class="payment-amount" id="pay-modal-amount">$0.00</div>
+                      <div class="payment-card-input">
+                        <label>Card Details</label>
+                        <div class="mock-input">••••  ••••  ••••  4242 <span class="card-expiry">12/29</span></div>
+                      </div>
+                      <button class="btn btn-pay-confirm" id="btn-pay-submit">Pay Securely</button>
+                      <button class="btn btn-pay-cancel" id="btn-pay-cancel">Cancel</button>
+                    </div>
+                  </div>
+                  
+                  <!-- Home Indicator bar on iPhone -->
+                  <div class="iphone-home-indicator"></div>
+                  
+                </div>
+              </div>
+            </div>
+            
+          </div>
+        </section>
+        
+        <!-- 3. CATALOG VIEW -->
+        <section id="tab-catalog" class="tab-panel">
+          <div class="catalog-dashboard-header">
+            <h3>Synced Catalog</h3>
+            <button class="btn btn-primary" id="btn-add-product">
+              <i class="fa-solid fa-plus"></i> Add Product
+            </button>
+          </div>
+          
+          <div class="catalog-grid" id="catalog-products-grid">
+            <!-- Populated via Javascript -->
+          </div>
+          
+        </section>
+        
+        <!-- 4. CAMPAIGNS VIEW -->
+        <section id="tab-campaigns" class="tab-panel">
+          <div class="campaign-dashboard-header">
+            <h3>WhatsApp Template Broadcasts</h3>
+            <button class="btn btn-primary" id="btn-schedule-campaign">
+              <i class="fa-solid fa-plus"></i> Schedule Campaign
+            </button>
+          </div>
+          
+          <!-- Campaign Stats -->
+          <div class="campaign-stats-row">
+            <div class="cstat-card">
+              <span class="cstat-label">Total Messages Sent</span>
+              <span class="cstat-value">12.4K</span>
+            </div>
+            <div class="cstat-card">
+              <span class="cstat-label">Average Read Rate</span>
+              <span class="cstat-value text-green">89.4%</span>
+            </div>
+            <div class="cstat-card">
+              <span class="cstat-label">Average Reply Rate</span>
+              <span class="cstat-value text-blue">42.1%</span>
+            </div>
+            <div class="cstat-card">
+              <span class="cstat-label">Total Revenue Driven</span>
+              <span class="cstat-value text-gold">$8,450.00</span>
+            </div>
+          </div>
+          
+          <!-- Campaign List -->
+          <div class="campaigns-list-wrapper">
+            <h3>Recent Broadcasts</h3>
+            <div class="campaign-list" id="campaigns-container">
+              
+              <div class="campaign-row">
+                <div class="campaign-info">
+                  <h4>🔥 Summer Flash Sale (Approved Template)</h4>
+                  <p>Sent to: <strong>All Active Customers (412 users)</strong> • Jul 24, 2026</p>
+                </div>
+                <div class="campaign-performance">
+                  <div class="perf-metric">
+                    <span class="num">412</span>
+                    <span class="lbl">Sent</span>
+                  </div>
+                  <div class="perf-metric">
+                    <span class="num text-green">94%</span>
+                    <span class="lbl">Read</span>
+                  </div>
+                  <div class="perf-metric">
+                    <span class="num text-blue">52%</span>
+                    <span class="lbl">Replied</span>
+                  </div>
+                </div>
+                <div class="campaign-status-col">
+                  <span class="status-badge paid">Completed</span>
+                </div>
+              </div>
+              
+              <div class="campaign-row">
+                <div class="campaign-info">
+                  <h4>👋 Cart Abandonment Flow</h4>
+                  <p>Triggered on: <strong>Cart idle > 2 hours</strong> • Automated Campaign</p>
+                </div>
+                <div class="campaign-performance">
+                  <div class="perf-metric">
+                    <span class="num">184</span>
+                    <span class="lbl">Triggered</span>
+                  </div>
+                  <div class="perf-metric">
+                    <span class="num text-green">87%</span>
+                    <span class="lbl">Read</span>
+                  </div>
+                  <div class="perf-metric">
+                    <span class="num text-gold">24%</span>
+                    <span class="lbl">Recovered</span>
+                  </div>
+                </div>
+                <div class="campaign-status-col">
+                  <span class="status-badge shipped">Running</span>
+                </div>
+              </div>
+              
+            </div>
+          </div>
+          
+        </section>
+        
+        <!-- 5. SETTINGS VIEW -->
+        <section id="tab-settings" class="tab-panel">
+          <div class="settings-container">
+            <div class="settings-card">
+              <h3>Meta Cloud API Integration Settings</h3>
+              <p class="settings-subtitle">Manage connection parameters for Meta Business Developer Platform.</p>
+              
+              <div class="settings-form">
+                <div class="form-group">
+                  <label>Connected WhatsApp Business Phone Number</label>
+                  <input type="text" value="+91 9007378887" disabled class="input-disabled" style="color: var(--primary-color) !important; font-weight: 700;">
+                </div>
+                <div class="form-group">
+                  <label>WhatsApp Business Account (WABA) ID</label>
+                  <input type="text" value="waba_act_894320982312093" disabled class="input-disabled">
+                </div>
+                <div class="form-group">
+                  <label>WhatsApp Phone Number ID</label>
+                  <input type="text" value="phone_id_982312480928340" disabled class="input-disabled">
+                </div>
+                <div class="form-group">
+                  <label>Meta Access Token (System User Permanent Token)</label>
+                  <input type="password" value="EAAGm0PX4ZCpsBAK77mB..." disabled class="input-disabled">
+                </div>
+                <div class="form-group-row">
+                  <div class="form-group">
+                    <label>Webhook URL (WhatsCart Endpoint)</label>
+                    <input type="text" value="https://api.whatscart.io/v1/webhooks/whatsapp" disabled class="input-disabled">
+                  </div>
+                  <div class="form-group">
+                    <label>Webhook Verification Token</label>
+                    <input type="text" value="whatscart_secure_verify_token_2026" disabled class="input-disabled">
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="settings-card">
+              <h3>eCommerce Storefront Sync</h3>
+              <div class="sync-actions-row">
+                <div class="sync-source">
+                  <i class="fa-brands fa-shopify shopify-icon"></i>
+                  <div>
+                    <h4>Shopify Store Connected</h4>
+                    <p>Synced with: <strong>beauty-glow-shop.myshopify.com</strong></p>
+                  </div>
+                </div>
+                <button class="btn btn-secondary"><i class="fa-solid fa-arrows-rotate"></i> Sync Products Now</button>
+              </div>
+            </div>
+          </div>
+        </section>
+        
+      </div>
+    </main>
+  </div>
+  
+  <!-- Add/Edit Product Modal -->
+  <div class="modal" id="product-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="product-modal-title">Add New Product</h3>
+        <button class="modal-close" id="btn-close-product-modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="product-form">
+          <div class="form-group">
+            <label for="prod-name">Product Name</label>
+            <input type="text" id="prod-name" required placeholder="e.g. Skin Glow Serum">
+          </div>
+          <div class="form-group-row">
+            <div class="form-group">
+              <label for="prod-price">Price ($)</label>
+              <input type="number" id="prod-price" step="0.01" required placeholder="e.g. 29.99">
+            </div>
+            <div class="form-group">
+              <label for="prod-sku">SKU</label>
+              <input type="text" id="prod-sku" required placeholder="e.g. GLOW-01">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="prod-image">Image URL</label>
+            <input type="url" id="prod-image" required placeholder="Paste image address...">
+          </div>
+          <div class="form-group">
+            <label for="prod-desc">Description</label>
+            <textarea id="prod-desc" required placeholder="Describe product benefits..."></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">Sync Product to WABA Catalog</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Campaign Scheduling Modal -->
+  <div class="modal" id="campaign-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Schedule New WhatsApp Campaign</h3>
+        <button class="modal-close" id="btn-close-campaign-modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="campaign-form">
+          <div class="form-group">
+            <label for="camp-name">Campaign Title</label>
+            <input type="text" id="camp-name" required placeholder="e.g. VIP Member Discount">
+          </div>
+          <div class="form-group">
+            <label for="camp-template">Select WhatsApp Approved Template</label>
+            <select id="camp-template" required>
+              <option value="flash_sale">flash_sale_promo_v2 (Marketing Template)</option>
+              <option value="welcome">welcome_onboarding (Utility Template)</option>
+              <option value="payment_reminder">payment_outstanding (Utility Template)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="camp-segment">Target Audience Segment</label>
+            <select id="camp-segment" required>
+              <option value="all">All Subscribers (412 contacts)</option>
+              <option value="inactive">Inactive > 30 Days (84 contacts)</option>
+              <option value="abandoned">Abandoned Cart Users (28 contacts)</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">Broadcast Instantly via API</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Script -->
+  <script src="app.js"></script>
+</body>
+</html>
