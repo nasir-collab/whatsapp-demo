@@ -15,22 +15,28 @@ app.use(express.static(path.join(__dirname)));
 const DB_PATH = path.join(__dirname, 'db.json');
 let webhookLogs = []; // Store webhook traffic in memory to display on frontend console
 
+let memoryDb = null; // In-memory database cache for serverless environments
+
 // Helper functions to read/write db.json
 function readDB() {
+  if (memoryDb) return memoryDb;
   try {
     const raw = fs.readFileSync(DB_PATH, 'utf8');
-    return JSON.parse(raw);
+    memoryDb = JSON.parse(raw);
+    return memoryDb;
   } catch (err) {
     console.error('Error reading db.json, returning empty structure', err);
-    return { stats: { sales: 0, conversion: 0, sessions: 0, orderCount: 0 }, products: [], customers: {}, orders: [] };
+    memoryDb = { stats: { sales: 0, conversion: 0, sessions: 0, orderCount: 0 }, products: [], customers: {}, orders: [] };
+    return memoryDb;
   }
 }
 
 function writeDB(data) {
+  memoryDb = data; // Always update in-memory cache first
   try {
     fs.writeFileSync(DB_PATH, JSON.stringify(data, null, 2), 'utf8');
   } catch (err) {
-    console.error('Error writing db.json', err);
+    console.warn('Read-only filesystem detected (Vercel). Persistent write skipped, using memory cache.', err.message);
   }
 }
 

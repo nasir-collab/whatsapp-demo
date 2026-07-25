@@ -3,7 +3,7 @@
 - `[x]` Update `server.js` to support agent takeover, template broadcasts, product card broadcasts, and button click webhooks.
 - `[x]` Update `app.js` API layer with `getCustomers()`.
 - `[x]` Update `app.js` to render the simulator `payment_reminder` template button correctly.
-- `[x]` Refactor `app.js` simulator buttons using event redirection on `#wa-messages-log`.
+- `[x]` Refactor `app.js` simulator buttons using event delegation on `#wa-messages-log`.
 - `[x]` Update `app.js` to render the inbox thread list dynamically.
 - `[x]` Update `app.js` to calculate and render the sidebar unread badge.
 - `[x]` Connect order payment success to dashboard and thread list refresh.
@@ -29,3 +29,6 @@
 - `[x]` Support custom receipt text on `success.html` by formatting the selected payment method details (e.g. UPI ID or Selected Bank Name) and passing it via query parameters.
 - `[x]` Rebrand the campaign landing page (`landing.html`) to display the new Traditional Ethnic Garments theme, updating the titles, copy descriptions, and showcase product item images.
 - `[x]` Copy user's brand logo image to the project directory and implement a CSS wrapper clipping technique (`overflow: hidden` and `scale(1.6)`) to isolate and display only the beautiful yellow checkmark symbol as a sharp, high-fidelity, scale-invariant vector icon across the console sidebar, login card, checkout gateway, and receipt pages, updating the brand name to Plan D Media.
+- `[x]` Create `.gitignore` to exclude `node_modules` from Git tracking.
+- `[x]` Create `vercel.json` routing configurations mapping serverless endpoints to `server.js` and public files.
+- `[x]` Refactor `server.js` read/write helper hooks to fail gracefully in serverless/read-only environments using an in-memory db fallback.

@@ -1,0 +1,39 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "server.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "server.js"
+    },
+    {
+      "src": "/(landing|payment|success|login|index).html",
+      "dest": "/$1.html"
+    },
+    {
+      "src": "/images/(.*)",
+      "dest": "/images/$1"
+    },
+    {
+      "src": "/(app|style).js",
+      "dest": "/$1.js"
+    },
+    {
+      "src": "/style.css",
+      "dest": "/style.css"
+    },
+    {
+      "src": "/db.json",
+      "dest": "/db.json"
+    },
+    {
+      "src": "/$",
+      "dest": "/login.html"
+    }
+  ]
+}
